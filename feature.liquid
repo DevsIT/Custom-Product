@@ -1,0 +1,340 @@
+{%- assign first_colour_product = '' -%} 
+{%- assign second_colour_product = '' -%}
+{%- assign third_colour_product = '' -%}
+{%- assign four_colour_product = '' -%}
+{%- assign five_colour_product = '' -%}
+{%- assign six_colour_product = '' -%}
+{%- assign seven_colour_product = '' -%}
+{%- assign eight_colour_product = '' -%}
+
+
+
+
+
+{%- comment -%}
+We allow to add two tabs that are extracted using the tag system. To add such a tag, simply create a page and
+note the handle somewhere.
+Next, add a tag to your product in this form: __tab1:page-handle or __tab2:page-handle
+The theme will automatically link the tab to the page
+{%- endcomment -%}
+
+{%- assign has_unique_colour_product_1 = false -%}
+{%- assign has_unique_colour_product_2 = false -%}
+{%- assign has_unique_colour_product_3 = false -%}
+{%- assign has_unique_colour_product_4 = false -%}
+{%- assign has_unique_colour_product_5= false -%}
+{%- assign has_unique_colour_product_6 = false -%}
+{%- assign has_unique_colour_product_7 = false -%}
+{%- assign has_unique_colour_product_8 = false -%}
+
+{%- assign has_cproduct = false -%}
+{%- assign has_rtproduct = 0 -%}
+
+{%- assign has_colour_product_1 = 0 -%}
+{%- assign has_colour_product_2 = 0 -%}
+{%- assign has_colour_product_3 = 0 -%}
+{%- assign has_colour_product_4 = 0 -%}
+{%- assign has_colour_product_5 = 0 -%}
+{%- assign has_colour_product_6 = 0 -%}
+{%- assign has_colour_product_7 = 0 -%}
+{%- assign has_colour_product_8 = 0 -%}
+
+
+{%- comment -%}Let's try the tags{%- endcomment -%}
+
+{%- for tag in product.tags -%}
+
+{%- if tag contains '__colour1' -%}
+{%- assign first_colour_product = tag | split: ':' | last -%}
+{%- assign colour_product_1 = first_colour_product -%}
+{%- assign has_unique_colour_product_1 = true -%}
+{%- assign has_colour_product_1 = 1 -%}
+{%- assign has_cproduct = true -%}
+{%- endif -%}
+
+{%- if tag contains '__colour2' -%}
+{%- assign second_colour_product = tag | split: ':' | last -%}
+{%- assign colour_product_2 = second_colour_product -%}
+{%- assign has_unique_colour_product_2 = true -%}
+{%- assign has_colour_product_2 = 1 -%}
+{%- assign has_cproduct = true -%}
+{%- endif -%}
+
+{%- if tag contains '__colour3' -%}
+{%- assign third_colour_product = tag | split: ':' | last -%}
+{%- assign colour_product_3 = third_colour_product -%}
+{%- assign has_unique_colour_product_3 = true -%}
+{%- assign has_colour_product_3 = 1 -%}
+{%- assign has_cproduct = true -%}
+{%- endif -%}
+
+{%- if tag contains '__colour4' -%}
+{%- assign four_colour_product = tag | split: ':' | last -%}
+{%- assign colour_product_4 = four_colour_product -%}
+{%- assign has_unique_colour_product_4 = true -%}
+{%- assign has_colour_product_4 = 1 -%}
+{%- assign has_cproduct = true -%}
+{%- endif -%}
+
+{%- if tag contains '__colour5' -%}
+{%- assign five_colour_product = tag | split: ':' | last -%}
+{%- assign colour_product_5 = five_colour_product -%}
+{%- assign has_unique_colour_product_5 = true -%}
+{%- assign has_colour_product_5 = 1 -%}
+{%- assign has_cproduct = true -%}
+{%- endif -%}
+
+{%- if tag contains '__colour6' -%}
+{%- assign six_colour_product = tag | split: ':' | last -%}
+{%- assign colour_product_6 = six_colour_product -%}
+{%- assign has_unique_colour_product_6 = true -%}
+{%- assign has_colour_product_6 = 1 -%}
+{%- assign has_cproduct = true -%}
+{%- endif -%}
+
+{%- if tag contains '__colour7' -%}
+{%- assign seven_colour_product = tag | split: ':' | last -%}
+{%- assign colour_product_7 = seven_colour_product -%}
+{%- assign has_unique_colour_product_7 = true -%}
+{%- assign has_colour_product_7 = 1 -%}
+{%- assign has_cproduct = true -%}
+{%- endif -%}
+
+{%- if tag contains '__colour8' -%}
+{%- assign eight_colour_product = tag | split: ':' | last -%}
+{%- assign colour_product_8 = eight_colour_product -%}
+{%- assign has_unique_colour_product_8 = true -%}
+{%- assign has_colour_product_8 = 1 -%}
+{%- assign has_cproduct = true -%}
+{%- endif -%}
+
+
+{%- endfor -%}
+
+
+
+{%- assign ctotal_product = has_colour_product_1 | plus: has_colour_product_2 | plus: has_colour_product_3 | plus: has_colour_product_4 | plus: has_colour_product_5 | plus: has_colour_product_6 | plus: has_colour_product_7 | plus: has_colour_product_8 -%}
+
+
+
+{%- for tag in product.tags -%}
+{%- if tag contains '__colour' -%}
+{%- assign has_clproduct = 1 -%}
+{% endif %}
+{% endfor %}
+
+{% if has_clproduct == 1 %}
+<div class="colour-option">
+  <h4 class="allColor">
+    Farbe:
+    <span>
+
+
+      {% if has_unique_colour_product_1 == true %}
+      {%- assign colour_product = all_products[colour_product_1] -%}
+      {% if colour_product.title != '' %}
+      {{ colour_product.title }}
+      {% endif %}
+      {% endif %}
+
+
+    </span>
+  </h4>
+
+  <ul>
+    {%- for i in (1..ctotal_product) -%}
+
+
+
+
+
+    {% if i == 1 and has_unique_colour_product_1 == true %}
+    {%- assign colour_product = all_products[colour_product_1] -%}
+
+
+    {% if colour_product.title != '' %}
+    <li>
+      <a 
+         href="{{ colour_product.url | within: collection }}">
+        <img src="{{ colour_product.featured_image | img_url: "small" }}">
+      </a>
+    </li>
+    {% endif %}
+
+
+
+    {% endif %}
+
+
+
+
+
+    {% if i == 2 and has_unique_colour_product_2 == true %}
+    {%- assign colour_product = all_products[colour_product_2] -%}
+
+    {% if colour_product.title != '' %}
+    <li>
+      <a 
+         href="{{ colour_product.url | within: collection }}">
+        <img src="{{ colour_product.featured_image | img_url: "small" }}">
+      </a>
+    </li>
+    {% endif %}
+
+    {% endif %}
+
+
+
+    {% if i == 3 and has_unique_colour_product_3 == true %}
+    {%- assign colour_product = all_products[colour_product_3] -%}
+
+
+    {% if colour_product.title != '' %}
+    <li>
+      <a 
+         href="{{ colour_product.url | within: collection }}">
+        <img src="{{ colour_product.featured_image | img_url: "small" }}">
+      </a>
+    </li>
+    {% endif %}
+
+
+
+    {% endif %}
+
+
+
+    {% if i == 4 and has_unique_colour_product_4 == true %}
+    {%- assign colour_product = all_products[colour_product_4] -%}
+
+    {% if colour_product.title != '' %}
+    <li>
+      <a 
+         href="{{ colour_product.url | within: collection }}">
+        <img src="{{ colour_product.featured_image | img_url: "small" }}">
+      </a>
+    </li>
+    {% endif %}
+
+    {% endif %}
+
+
+
+    {% if i == 5 and has_unique_colour_product_5 == true %}
+    {%- assign colour_product = all_products[colour_product_5] -%}
+
+    {% if colour_product.title != '' %}
+    <li>
+      <a 
+         href="{{ colour_product.url | within: collection }}">
+        <img src="{{ colour_product.featured_image | img_url: "small" }}">
+      </a>
+    </li>
+    {% endif %}
+
+
+    {% endif %}
+
+
+
+    {% if i == 6 and has_unique_colour_product_6 == true %}
+    {%- assign colour_product = all_products[colour_product_6] -%}
+
+    {% if colour_product.title != '' %}
+    <li>
+      <a 
+         href="{{ colour_product.url | within: collection }}">
+        <img src="{{ colour_product.featured_image | img_url: "small" }}">
+      </a>
+    </li>
+    {% endif %}
+
+
+
+    {% endif %}
+
+    {% if i == 7 and has_unique_colour_product_7 == true %}
+    {%- assign colour_product = all_products[colour_product_7] -%}
+
+    {% if colour_product.title != '' %}
+    <li>
+      <a 
+         href="{{ colour_product.url | within: collection }}">
+        <img src="{{ colour_product.featured_image | img_url: "small" }}">
+      </a>
+    </li>
+    {% endif %}
+
+
+
+    {% endif %}
+
+    {% if i == 8 and has_unique_colour_product_8 == true %}
+    {%- assign colour_product = all_products[colour_product_8] -%}
+
+
+    {% if colour_product.title != '' %}
+    <li>
+      <a 
+         href="{{ colour_product.url | within: collection }}">
+        <img src="{{ colour_product.featured_image | img_url: "small" }}">
+      </a>
+    </li>
+    {% endif %}
+
+
+
+    {% endif %}
+
+
+
+
+    {% assign i = i | plus: 1 %}
+    {%- endfor -%}
+  </ul>
+
+</div>
+<style>
+  .colour-option h4 {
+    margin-top: 10px;
+    font-size: 13px;
+    margin-bottom: 5px;
+    color: #858585;
+    text-transform: uppercase;
+  }
+  .colour-option ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .colour-option ul li {
+    display: inline-block;
+    padding: 0!important;
+  }
+  .colour-option ul li::before {
+    content: none !important;
+  }
+  .colour-option ul li a {
+    display: block;
+    width: 60px;
+    height: auto;
+    /*text-indent: -99999999999999999px;*/
+    border-radius: 0;
+    overflow: hidden;
+  }
+  .colour-option ul li:first-child a {
+    border: 1px solid #e5e5e5;
+  }
+
+  @media only screen and (max-device-width : 1024px){
+    .colour-option {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  }
+
+</style>
+
+{% endif %}
+
+
